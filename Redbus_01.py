@@ -26,7 +26,8 @@ bus_types_filters_xpath = "//ul[@class='list-chkbox']//li/label[2]"
 first_filter_name = 'SEATER'
 second_filter_name = 'AC'
 
-lowest_fare_bus_xpath = '//parent::div//preceding::div[contains(@class,"travels")]'
+
+all_filtered_buses_xpath = '//parent::div//preceding::div[contains(@class,"travels")]'
 filtered_buses_price_xpath = '//ul[@class="bus-items"]//*[contains(@class,"seat-fare ")]//span'
 
 scrolling_element_one_xpath = "(//*[contains(text(),'ARRIVAL TIME')])[1]"
@@ -128,13 +129,17 @@ def capture_buses_on_lowest_fare():
 
     filtered_bus_prices = driver.find_elements(By.XPATH, filtered_buses_price_xpath)
     filtered_bus_prices_list = []
+    all_filtered_buses_name_list = []
 
     for price in filtered_bus_prices:
         filtered_bus_prices_list.append(float(price.text))
 
     minimum_bus_fare = min(filtered_bus_prices_list)
     index_minimum_bus_fare_index = filtered_bus_prices_list.index(minimum_bus_fare)
-    bus_names = driver.find_elements(By.XPATH, filtered_buses_price_xpath + lowest_fare_bus_xpath)
+    bus_names = driver.find_elements(By.XPATH, filtered_buses_price_xpath + all_filtered_buses_xpath)
+
+    for bus_name in bus_names:
+        all_filtered_buses_name_list.append(bus_name.text)
     bus_name_with_lowest_price = bus_names[index_minimum_bus_fare_index].text
 
     action = ActionChains(driver)
@@ -142,7 +147,7 @@ def capture_buses_on_lowest_fare():
     time.sleep(2)
     driver.save_screenshot('Bus_With_Min_Price.png')
     print('Bus Name With Lowest Fare : ', bus_name_with_lowest_price)
-
+    print(all_filtered_buses_name_list)
 
 launching_application()
 selecting_cities()
