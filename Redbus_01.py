@@ -56,7 +56,7 @@ def launching_application():
 
 
 def selecting_cities():
-    driver.find_element(By.XPATH, From_text_field_xpath).send_keys(starting_location_name)
+    driver.find_element(By.CSS_SELECTOR,"input#src").send_keys(starting_location_name)
     time.sleep(2)
     From_cities_suggestion_list = driver.find_elements(By.XPATH, from_cities_suggestion_xpath)
 
