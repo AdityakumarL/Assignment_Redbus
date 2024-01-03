@@ -184,9 +184,12 @@ def capture_buses_on_lowest_fare():
     print('Bus Name With Min Fare : ',bus_name_with_min_fare)
 
 
+def close_application():
+    driver.close()
 
 launching_application()
 selecting_cities()
 selecting_date_and_search_buses()
 filter_the_buses()
 capture_buses_on_lowest_fare()
+close_application()
